@@ -10,7 +10,7 @@ sed -i "s|DISTRIB_REVISION='.*'|DISTRIB_REVISION='R$(date +%Y.%m.%d)'|g" package
 echo "DISTRIB_SOURCECODE='immortalwrt'" >>package/base-files/files/etc/openwrt_release
 
 # Set ssid
-sed -i "s/OpenWrt/LYNX/g" package/kernel/mac80211/files/lib/wifi/mac80211.sh
+sed -i "s/OpenWrt/FyNn/g" package/kernel/mac80211/files/lib/wifi/mac80211.sh
 
 # Set default password
 sed -i '18s/^/# /' package/emortal/default-settings/files/99-default-settings
@@ -19,7 +19,7 @@ sed -i '18s/^/# /' package/emortal/default-settings/files/99-default-settings
 sed -i -e "s/CST-8/WIB-7/g" -e "s/Shanghai/Jakarta/g" package/emortal/default-settings/files/99-default-settings-chinese
 
 # Set hostname
-sed -i "s/ImmortalWrt/LYNX/g" package/base-files/files/bin/config_generate
+sed -i "s/ImmortalWrt/FyNn/g" package/base-files/files/bin/config_generate
 
 # Set passwd
 sed -i "s/root::0:0:99999:7:::/root:"'$'"1"'$'"pSFNodTy"'$'"ej92Jju6QPD9AIAuelgnr.:18993:0:99999:7:::/g" package/base-files/files/etc/shadow
