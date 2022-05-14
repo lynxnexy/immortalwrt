@@ -30,7 +30,7 @@ sed -i "s/+luci-theme-bootstrap //" feeds/luci/collections/luci/Makefile
 
 # Set banner
 rm -rf ./package/emortal/default-settings/files/openwrt_banner
-svn export https://github.com/lynxnexy/immortalwrt/trunk/amlogic/common/rootfs/etc/banner package/emortal/default-settings/files/openwrt_banner
+svn export https://github.com/Jbt88/immortalwrt/trunk/amlogic/common/rootfs/etc/banner package/emortal/default-settings/files/openwrt_banner
 
 # Set shell zsh
 sed -i "s/\/bin\/ash/\/usr\/bin\/zsh/g" package/base-files/files/etc/passwd
