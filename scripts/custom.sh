@@ -47,6 +47,12 @@ svn co https://github.com/4IceG/luci-app-atinout-mod/trunk package/luci-app-atin
 # Add luci-app-sms-tool
 svn co https://github.com/4IceG/luci-app-sms-tool/trunk package/luci-app-sms-tool
 
+# Add luci-app-modeminfo
+# svn co https://github.com/koshev-msk/luci-app-modeminfo/trunk package/luci-app-modeminfo
+
+# Add xmm-modem
+svn co https://github.com/koshev-msk/xmm-modem/trunk package/xmm-modem
+
 # Add luci-app-amlogic
 svn co https://github.com/ophub/luci-app-amlogic/trunk package/luci-app-amlogic
 
@@ -58,10 +64,22 @@ mkdir -p files/etc/openclash/core
 OPENCLASH_MAIN_URL=$(curl -sL https://api.github.com/repos/vernesong/OpenClash/releases/tags/Clash | grep /clash-linux-armv8 | awk -F '"' '{print $4}')
 CLASH_TUN_URL=$(curl -sL https://api.github.com/repos/vernesong/OpenClash/releases/tags/TUN-Premium | grep /clash-linux-armv8 | awk -F '"' '{print $4}')
 CLASH_GAME_URL=$(curl -sL https://api.github.com/repos/vernesong/OpenClash/releases/tags/TUN | grep /clash-linux-armv8 | awk -F '"' '{print $4}')
+CLASH_META_URL="https://raw.githubusercontent.com/vernesong/OpenClash/master/core-lateset/meta/clash-linux-armv8.tar.gz"
 wget -qO- $OPENCLASH_MAIN_URL | tar xOvz > files/etc/openclash/core/clash
 wget -qO- $CLASH_TUN_URL | gunzip -c > files/etc/openclash/core/clash_tun
 wget -qO- $CLASH_GAME_URL | tar xOvz > files/etc/openclash/core/clash_game
+wget -qO- $CLASH_META_URL | tar xOvz > files/etc/openclash/core/clash_meta
 chmod +x files/etc/openclash/core/clash*
+
+# Set v2ray-rules-dat
+mkdir -p files/etc/openclash
+curl -sL https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat -o files/etc/openclash/GeoSite.dat
+curl -sL https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat -o files/etc/openclash/GeoIP.dat
+
+# Set yt-dlp
+mkdir -p files/bin
+curl -sL https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o files/bin/yt-dlp
+chmod +x files/bin/yt-dlp
 
 # Set preset-speedtest
 mkdir -p files/bin
