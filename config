@@ -887,8 +887,8 @@ CONFIG_PACKAGE_zsh=y
 CONFIG_PACKAGE_chat=y
 CONFIG_PACKAGE_atinout=y
 CONFIG_PACKAGE_kmod-nls-base=y
-CONFIG_PACKAGE_kmod-usb-serial-qualcomm
-CONFIG_PACKAGE_libimobiledevice-utils
+CONFIG_PACKAGE_kmod-usb-serial-qualcomm=y
+CONFIG_PACKAGE_libimobiledevice-utils=y
 CONFIG_PACKAGE_libplist-utils=y
 CONFIG_PACKAGE_libusbmuxd-utils=y
 CONFIG_PACKAGE_minicom=y
