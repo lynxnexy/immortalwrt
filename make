@@ -47,10 +47,11 @@ script_repo="https://github.com/ophub/luci-app-amlogic/tree/main/luci-app-amlogi
 kernel_repo="https://github.com/ophub/kernel/tree/main/pub"
 version_branch="stable"
 auto_kernel="false"
-build_kernel=("5.10.110" "5.4.188")
+build_kernel=("5.4.196")
 # Set supported SoC
 build_openwrt=(
-    "ARMv8"
+    "hg680p"
+    "b860h"
 )
 # Set OpenWrt firmware size (SKIP_MB >= 4, BOOT_MB >= 256, ROOT_MB >= 512)
 SKIP_MB="68"
@@ -263,8 +264,14 @@ confirm_version() {
 
     # Confirm soc branch
     case "${soc}" in
-    ARMv8)
+    hg680p)
         FDTFILE="meson-gxl-s905x-p212.dtb"
+        UBOOT_OVERLOAD="u-boot-p212.bin"
+        MAINLINE_UBOOT=""
+        ANDROID_UBOOT=""
+        ;;
+    b860h)
+        FDTFILE="meson-gxl-s905x-b860h.dtb"
         UBOOT_OVERLOAD="u-boot-p212.bin"
         MAINLINE_UBOOT=""
         ANDROID_UBOOT=""
@@ -534,7 +541,7 @@ make_image() {
     process_msg " (5/7) Make ImmortalWrt image."
     cd ${make_path}
 
-    build_image_file="${out_path}/immortalwrt-21.02-k${kernel}-$(date +"%Y.%m.%d.%H%M").img"
+    build_image_file="${out_path}/immortalwrt-21.02-${soc}-k${kernel}-$(date +"%Y.%m.%d.%H%M").img"
     rm -f ${build_image_file}
     sync
 

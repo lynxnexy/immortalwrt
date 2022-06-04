@@ -36,7 +36,7 @@ svn export https://github.com/Jbt88/immortalwrt/trunk/amlogic/common/rootfs/etc/
 sed -i "s/\/bin\/ash/\/usr\/bin\/zsh/g" package/base-files/files/etc/passwd
 
 # Add luci-app-3ginfo-lite
-svn co https://github.com/4IceG/luci-app-3ginfo-lite/trunk package/luci-app-3ginfo-lite
+svn co https://github.com/lynxnexy/luci-app-3ginfo-lite/trunk package/luci-app-3ginfo-lite
 
 # Add luci-app-modemband
 svn co https://github.com/4IceG/luci-app-modemband/trunk package/luci-app-modemband
