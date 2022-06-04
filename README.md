@@ -1,4 +1,4 @@
-#  ImmortalWrt-21.02 for Amlogic ARMv8
+#  ImmortalWrt-21.02 for hg680p & b860h
 
 ## Firmware information:
 1. Default IP: `192.168.1.1`
