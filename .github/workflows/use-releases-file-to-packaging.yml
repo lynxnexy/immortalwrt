@@ -75,7 +75,7 @@ jobs:
         allowUpdates: true
         token: ${{ secrets.GITHUB_TOKEN }}
         body: |
-          This is ImmortalWrt firmware for Amlogic ARMv8
+          This is ImmortalWrt firmware for hg680p & b860h
           * Firmware information
           Default IP: 192.168.1.1
           Default username: root
