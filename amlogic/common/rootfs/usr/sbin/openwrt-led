@@ -1,5 +1,6 @@
 #!/bin/bash
 #=========================================================================
+#
 # This file is licensed under the terms of the GNU General Public
 # License version 2. This program is licensed "as is" without any
 # warranty of any kind, whether express or implied.
@@ -12,6 +13,7 @@
 # Copyright (C) 2022- https://github.com/ophub/amlogic-s9xxx-openwrt
 #
 # Command: openwrt-led
+#
 #=========================================================================
 
 do_start() {
@@ -20,7 +22,7 @@ do_start() {
     openvfd_service="${openvfd_path}/vfdservice"
 
     if [[ -f "${conf_file}" && -f "${openvfd_service}" ]]; then
-        source ${conf_file}
+        source "${conf_file}"
         echo "Using LED Profiles: ${conf_file}"
     else
         echo "The LED profile [ ${conf_file} ] does not exist!"
@@ -42,7 +44,7 @@ do_start() {
 
     trap "killall ${openvfd_service}; rmmod openvfd; exit" 2 3 15
 
-    if [ -n "${functions}" ]; then
+    if [[ -n "${functions}" ]]; then
         for func in ${functions}; do
             echo "turn led ${func} on ... "
             echo "${func}" >/sys/class/leds/openvfd/led_on 2>/dev/null
@@ -65,36 +67,42 @@ do_select_box() {
     case "${1}" in
         11 | x96max)      do_start x96max.conf ;;
         12 | x96maxplus)  do_start x96maxplus.conf ;;
-        13 | h96max-x3)   do_start h96max-x3.conf ;;
-        14 | hk1-x3)      do_start hk1-x3.conf ;;
-        15 | hk1box)      do_start hk1box.conf ;;
-        16 | tx3)         do_start tx3.conf ;;
-        17 | x96air)      do_start x96air.conf ;;
+        13 | x96air)      do_start x96air.conf ;;
+        14 | h96max-x3)   do_start h96max-x3.conf ;;
+        15 | hk1-x3)      do_start hk1-x3.conf ;;
+        16 | hk1box)      do_start hk1box.conf ;;
+        17 | tx3)         do_start tx3.conf ;;
+        18 | tx3-mini)    do_start tx3-mini.conf ;;
+        19 | t95)         do_start t95.conf ;;
+        20 | tx9-pro)     do_start tx9-pro.conf ;;
         99 | diy)         do_start diy.conf ;;
-         0 | o | stop)    do_stop ;;
+         0 | stop)        do_stop ;;
          1 | * | quit)    echo "quit!" && exit 0 ;;
     esac
 }
 
-if [ -z "${1}" ]; then
+if [[ -z "${1}" ]]; then
     clear
     cat <<EOF
 
         ┌────────[ Enable LED ]─────────┐
         │                               │
-        │        11. x96max             │
-        │        12. x96maxplus         │
-        │        13. h96max-x3          │
-        │        14. hk1-x3             │
-        │        15. hk1box             │
-        │        16. tx3                │
-        │        17. x96air             │
-        │        99. diy                │
+        │    11. x96max (s905x2)        │
+        │    12. x96maxplus (s905x3)    │
+        │    13. x96air (s905x3)        │
+        │    14. h96max-x3 (s905x3)     │
+        │    15. hk1-x3 (s905x3)        │
+        │    16. hk1box (s905x3)        │
+        │    17. tx3 (s905x3)           │
+        │    18. tx3-mini (s905w)       │
+        │    19. t95 (s905x)            │
+        │    20. tx9-pro (s912)         │
+        │    99. diy                    │
         │                               │
         ├────[ Disable LED or Quit ]────┤
         │                               │
-        │         0. stop               │
-        │         1. quit               │
+        │     0. stop                   │
+        │     1. quit                   │
         │                               │
         └───────────────────────────────┘
 
