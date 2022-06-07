@@ -59,6 +59,9 @@ svn co https://github.com/ophub/luci-app-amlogic/trunk package/luci-app-amlogic
 # Add p7zip
 svn co https://github.com/hubutui/p7zip-lede/trunk package/p7zip
 
+# Add luci-app-tinyfilemanager
+svn co https://github.com/lynxnexy/luci-app-tinyfilemanager/trunk package/luci-app-tinyfilemanager
+
 # Set preset-clash-core
 mkdir -p files/etc/openclash/core
 OPENCLASH_MAIN_URL=$(curl -sL https://api.github.com/repos/vernesong/OpenClash/releases/tags/Clash | grep /clash-linux-armv8 | awk -F '"' '{print $4}')
