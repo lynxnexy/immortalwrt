@@ -60,7 +60,7 @@ svn co https://github.com/ophub/luci-app-amlogic/trunk package/luci-app-amlogic
 svn co https://github.com/hubutui/p7zip-lede/trunk package/p7zip
 
 # Add luci-app-tinyfilemanager
-svn co https://github.com/lynxnexy/luci-app-tinyfilemanager/trunk package/luci-app-tinyfilemanager
+# svn co https://github.com/lynxnexy/luci-app-tinyfilemanager/trunk package/luci-app-tinyfilemanager
 
 # Set preset-clash-core
 mkdir -p files/etc/openclash/core
