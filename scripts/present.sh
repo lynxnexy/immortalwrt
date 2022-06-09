@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # Copyright 2022 by lynxnexy <https://github.com/lynxnexy/immortalwrt>
 # 
@@ -15,5 +15,3 @@ document.getElementById("editor").src = "http://" + window.location.hostname + "
 EOF
 
 sed -i '87 i\	entry({"admin", "services", "openclash", "editor"}, template("openclash/editor"),_("Config Editor"), 90).leaf = true' files/usr/lib/lua/luci/controller/openclash.lua
-
-exit 0
