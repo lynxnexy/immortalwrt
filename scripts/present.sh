@@ -2,7 +2,6 @@
 #
 # Copyright 2022 by lynxnexy <https://github.com/lynxnexy/immortalwrt>
 # 
-mkdir -p files/usr/lib/lua/luci/view/openclash
 cat << EOF > files/usr/lib/lua/luci/view/openclash/editor.htm
 <%+header%>
 <div class="cbi-map">
