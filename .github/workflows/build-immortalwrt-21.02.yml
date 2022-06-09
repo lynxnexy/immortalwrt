@@ -25,6 +25,7 @@ env:
   CONFIG_FILE: config
   DIY_P1_SH: scripts/feeds.sh
   DIY_P2_SH: scripts/custom.sh
+  DIY_P3_SH: scripts/present.sh
   TZ: Asia/Jakarta
 
 jobs:
@@ -74,9 +75,10 @@ jobs:
       run: |
         [ -e files ] && mv files immortalwrt/files
         [ -e $CONFIG_FILE ] && cp -f $CONFIG_FILE immortalwrt/.config
-        chmod +x $DIY_P2_SH
+        chmod +x $DIY_P2_SH $DIY_P3_SH
         cd immortalwrt
         $GITHUB_WORKSPACE/$DIY_P2_SH
+        $GITHUB_WORKSPACE/$DIY_P3_SH
 
     - name: Download package
       id: package
