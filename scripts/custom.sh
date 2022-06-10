@@ -35,6 +35,9 @@ svn export https://github.com/lynxnexy/immortalwrt/trunk/amlogic/common/rootfs/e
 # Set shell zsh
 sed -i "s/\/bin\/ash/\/usr\/bin\/zsh/g" package/base-files/files/etc/passwd
 
+# Set php7 max_size
+sed -i -e "s/upload_max_filesize = 2M/upload_max_filesize = 1024M/g" -e "s/post_max_size = 8M/post_max_size = 1024M/g" feeds/packages/lang/php7/files/php.ini
+
 # Add luci-app-3ginfo-lite
 svn co https://github.com/lynxnexy/luci-app-3ginfo-lite/trunk package/luci-app-3ginfo-lite
 
