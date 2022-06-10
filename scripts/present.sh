@@ -1,5 +1,5 @@
 #!/bin/bash
-#
+# Openclash Config Editor by Tiny File Manager
 # Copyright 2022 by lynxnexy <https://github.com/lynxnexy/immortalwrt>
 # 
 
