@@ -9,11 +9,11 @@ inputs:
   amlogic_openwrt:
     description: 'Choose Amlogic SoC.'
     required: false
-    default: 'ARMv8'
+    default: 'hg680p_b860h'
   amlogic_kernel:
     description: 'Choose kernel.'
     required: false
-    default: '5.15.25_5.4.180'
+    default: '5.4.196_5.15.46'
   auto_kernel:
     description: 'Auto use the latest kernel.'
     required: false
