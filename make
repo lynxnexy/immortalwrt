@@ -660,6 +660,9 @@ loop_make() {
 
     # Backup the openwrt file
     cp -f ${openwrt_path}/${openwrt_file_name} ${out_path} 2>/dev/null && sync
+
+    # Generate sha256sum check file
+    sha256sum * >sha256sums && sync
 }
 
 # Show welcome message
