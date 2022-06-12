@@ -47,7 +47,7 @@ script_repo="https://github.com/ophub/luci-app-amlogic/tree/main/luci-app-amlogi
 kernel_repo="https://github.com/ophub/kernel/tree/main/pub"
 version_branch="stable"
 auto_kernel="false"
-build_kernel=("5.4.197" "5.15.46" "5.17.14")
+build_kernel=("5.4.197" "5.15.46")
 # Set supported SoC
 build_openwrt=(
     "hg680p"
@@ -56,7 +56,7 @@ build_openwrt=(
 # Set OpenWrt firmware size (SKIP_MB >= 4, BOOT_MB >= 256, ROOT_MB >= 512)
 SKIP_MB="68"
 BOOT_MB="256"
-ROOT_MB="1536"
+ROOT_MB="1024"
 #
 #============================================================================
 
