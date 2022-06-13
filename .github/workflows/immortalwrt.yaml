@@ -111,7 +111,7 @@ jobs:
 
       - name: Build ImmortalWrt firmware
         if: steps.compile.outputs.status == 'success' && !cancelled()
-        uses: ophub/amlogic-s9xxx-openwrt@main
+        uses: lynxnexy/immortalwrt@main
         with:
           openwrt_path: immortalwrt/bin/targets/*/*/*rootfs.tar.gz
           openwrt_soc: ${{ github.event.inputs.openwrt_soc }}
