@@ -7,6 +7,7 @@
 #
 # This file is a part of the make OpenWrt for Amlogic s9xxx tv box
 # https://github.com/ophub/amlogic-s9xxx-openwrt
+# https://github.com/lynxnexy/immortalwrt
 #
 # Description: Automatically Packaged OpenWrt for Amlogic s9xxx tv box
 # Copyright (C) 2020- https://github.com/unifreq
