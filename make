@@ -60,7 +60,7 @@ script_repo="https://github.com/ophub/luci-app-amlogic/tree/main/luci-app-amlogi
 # Kernel files download repository
 kernel_repo="https://github.com/ophub/kernel/tree/main/pub"
 version_branch="stable"
-auto_kernel="true"
+auto_kernel="false"
 build_kernel=("5.4.197" "5.15.46")
 # Set supported SoC
 build_openwrt=(
