@@ -6,7 +6,7 @@
 # Source code repository: https://github.com/immortalwrt/immortalwrt / Branch: openwrt-21.02
 #========================================================================================================================
 
-name: ImmortalWrt-21.02
+name: Build ImmortalWrt-21.02
 
 on:
   repository_dispatch:
@@ -118,7 +118,7 @@ jobs:
           openwrt_kernel: ${{ github.event.inputs.openwrt_kernel }}
           openwrt_size: ${{ github.event.inputs.openwrt_size }}
 
-      - name: Upload ImmortalWrt Firmware to Release
+      - name: Upload ImmortalWrt firmware to release
         uses: ncipollo/release-action@main
         if: env.PACKAGED_STATUS == 'success' && !cancelled()
         with:
