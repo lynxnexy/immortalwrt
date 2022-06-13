@@ -1,0 +1,86 @@
+#========================================================================================================================
+# https://github.com/lynxnexy/immortalwrt
+# Description: Use Releases file to packaging
+# Cron: min (0 - 59) / hour (0 - 23) / day of month (1 - 31) / month (1 - 12) / day of week (0 - 6)(Sunday - Saturday)
+#========================================================================================================================
+
+name: Use Releases file to Packaging
+
+on:
+  repository_dispatch:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Select Branch [ 21.02 ]'
+        required: false
+        default: '21.02'
+      more_settings:
+        description: "More parameter settings"
+        required: false
+        default: ""
+
+env:
+  TZ: Asia/Jakarta
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    if: github.event.repository.owner.id == github.event.sender.id
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Initialization environment
+      env:
+        DEBIAN_FRONTEND: noninteractive
+      run: |
+        sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
+        sudo -E apt-get -qq update
+        sudo -E apt-get -qq install $(curl -fsSL https://bit.ly/ubuntu2204-depends)
+        sudo -E apt-get -qq autoremove --purge
+        sudo -E apt-get -qq clean
+        sudo timedatectl set-timezone "$TZ"
+        # Input value validation
+        ARR_BRANCH=("21.02")
+        if [[ -n "${{ github.event.inputs.branch }}" && -n "$(echo "${ARR_BRANCH[@]}" | grep -w "${{ github.event.inputs.branch }}")" ]]; then
+           RELEASES_BRANCH=${{ github.event.inputs.branch }}
+        else
+           RELEASES_BRANCH=21.02
+        fi
+        echo "RELEASES_BRANCH=${RELEASES_BRANCH}" >> $GITHUB_ENV
+        echo "COMPILE_STARTINGTIME=$(date +"%m.%d.%H%M")" >> $GITHUB_ENV
+
+    - name: Build ImmortalWrt firmware
+      id: build
+      if: (!cancelled())
+      run: |
+        [ -d immortalwrt-armvirt ] || mkdir -p immortalwrt-armvirt
+        curl -s "https://api.github.com/repos/${GITHUB_REPOSITORY}/releases" | grep -o "ImmortalWrt-${{ env.RELEASES_BRANCH }}.*/immortalwrt-armvirt-.*.tar.gz" | head -n 1 > DOWNLOAD_ARMVIRT
+        [ -s DOWNLOAD_ARMVIRT ] && wget -q -P immortalwrt-armvirt https://github.com/${GITHUB_REPOSITORY}/releases/download/$(cat DOWNLOAD_ARMVIRT)
+        sudo chmod +x make
+        sudo ./make -d ${{ github.event.inputs.more_settings }}
+        curl -s "https://api.github.com/repos/${GITHUB_REPOSITORY}/releases" | grep -o "ImmortalWrt-${{ env.RELEASES_BRANCH }}.*/ipk.tar.gz" | head -n 1 > DOWNLOAD_IPK
+        [ -s DOWNLOAD_IPK ] && sudo wget -q -P out https://github.com/${GITHUB_REPOSITORY}/releases/download/$(cat DOWNLOAD_IPK)
+        echo "PACKAGED_OUTPUTPATH=${PWD}/out" >> $GITHUB_ENV
+        echo "PACKAGED_OUTPUTDATE=$(date +"%m.%d.%H%M")" >> $GITHUB_ENV
+        echo "::set-output name=status::success"
+
+    - name: Upload ImmortalWrt Firmware to Release
+      uses: ncipollo/release-action@v1
+      if: steps.build.outputs.status == 'success' && !cancelled()
+      with:
+        tag: ImmortalWrt-${{ env.RELEASES_BRANCH }}-${{ env.PACKAGED_OUTPUTDATE }}
+        artifacts: ${{ env.PACKAGED_OUTPUTPATH }}/*
+        allowUpdates: true
+        token: ${{ secrets.GITHUB_TOKEN }}
+        body: |
+          This is ImmortalWrt firmware for hg680p & b860h
+          * Firmware information
+          Default IP: 192.168.1.1
+          Default username: root
+          Default password: passwd
+          Default WIFI name: LYNX
+          Default WIFI password: none
+          Install to EMMC: Login to ImmortalWrt → System → Amlogic Service → Install OpenWrt
+
