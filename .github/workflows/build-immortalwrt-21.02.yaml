@@ -1,0 +1,140 @@
+#========================================================================================================================
+# https://github.com/ophub/amlogic-s9xxx-openwrt
+# https://github.com/lynxnexy/immortalwrt
+# Description: Automatically Build OpenWrt for Amlogic s9xxx tv box
+# Cron: min (0 - 59) / hour (0 - 23) / day of month (1 - 31) / month (1 - 12) / day of week (0 - 6)(Sunday - Saturday)
+# Source code repository: https://github.com/immortalwrt/immortalwrt / Branch: openwrt-21.02
+#========================================================================================================================
+
+name: Build ImmortalWrt-21.02
+
+on:
+  repository_dispatch:
+  workflow_dispatch:
+    inputs:
+      openwrt_soc:
+        description: "Choose Amlogic SoC."
+        required: false
+        default: "all"
+      openwrt_kernel:
+        description: "Choose kernel version."
+        required: false
+        default: "5.4.197_5.15.46"
+      openwrt_size:
+        description: "Set the rootfs size(Unit: MiB)."
+        required: false
+        default: "1024"
+  #schedule:
+    #- cron: '0 17 * * 0'
+
+env:
+  REPO_URL: https://github.com/immortalwrt/immortalwrt.git
+  REPO_BRANCH: openwrt-21.02
+  FEEDS_CONF: feeds.conf.default
+  CONFIG_FILE: config
+  DIY_P1_SH: scripts/feeds.sh
+  DIY_P2_SH: scripts/custom.sh
+  DIY_P3_SH: scripts/present.sh
+  TZ: Asia/Jakarta
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    if: github.event.repository.owner.id == github.event.sender.id
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Initialization environment
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: |
+          sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
+          sudo -E apt-get -qq update
+          sudo -E apt-get -qq install $(curl -fsSL https://is.gd/depend_ubuntu2204_openwrt)
+          sudo -E apt-get -qq autoremove --purge
+          sudo -E apt-get -qq clean
+          sudo timedatectl set-timezone "$TZ"
+          sudo mkdir -p /workdir
+          sudo chown $USER:$GROUPS /workdir
+          echo "COMPILE_STARTINGTIME=$(date +"%m.%d.%H%M")" >> $GITHUB_ENV
+
+      - name: Clone source code
+        working-directory: /workdir
+        run: |
+          df -hT $PWD
+          git clone --depth 1 $REPO_URL -b $REPO_BRANCH immortalwrt
+          ln -sf /workdir/immortalwrt $GITHUB_WORKSPACE/immortalwrt
+
+      - name: Load custom feeds
+        run: |
+          [ -e $FEEDS_CONF ] && cp -f $FEEDS_CONF immortalwrt/feeds.conf.default
+          chmod +x $DIY_P1_SH
+          cd immortalwrt
+          $GITHUB_WORKSPACE/$DIY_P1_SH
+
+      - name: Update feeds
+        run: cd immortalwrt && ./scripts/feeds update -a
+
+      - name: Install feeds
+        run: cd immortalwrt && ./scripts/feeds install -a
+
+      - name: Load custom configuration
+        run: |
+          [ -e files ] && mv files immortalwrt/files
+          [ -e $CONFIG_FILE ] && cp -f $CONFIG_FILE immortalwrt/.config
+          chmod +x $DIY_P2_SH $DIY_P3_SH
+          cd immortalwrt
+          $GITHUB_WORKSPACE/$DIY_P2_SH
+          $GITHUB_WORKSPACE/$DIY_P3_SH
+
+      - name: Download package
+        id: package
+        run: |
+          cd immortalwrt
+          make defconfig
+          make download -j8
+          find dl -size -1024c -exec ls -l {} \;
+          find dl -size -1024c -exec rm -f {} \;
+
+      - name: Compile the firmware
+        id: compile
+        run: |
+          cd immortalwrt
+          echo -e "$(nproc) thread compile"
+          make -j$(($(nproc) + 1)) V=s || make -j1 || make -j1 V=s
+          grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
+          [ -s DEVICE_NAME ] && echo "DEVICE_NAME=$(cat DEVICE_NAME)" >> $GITHUB_ENV
+          echo "FILE_DATE=$(date +"%m.%d.%H%M")" >> $GITHUB_ENV
+          echo "::set-output name=status::success"
+
+      - name: Build ImmortalWrt firmware
+        if: steps.compile.outputs.status == 'success' && !cancelled()
+        uses: lynxnexy/immortalwrt@main
+        with:
+          openwrt_path: immortalwrt/bin/targets/*/*/*rootfs.tar.gz
+          openwrt_soc: ${{ github.event.inputs.openwrt_soc }}
+          openwrt_kernel: ${{ github.event.inputs.openwrt_kernel }}
+          openwrt_size: ${{ github.event.inputs.openwrt_size }}
+          [ -d ipk ] || mkdir -p ipk
+          cp -rf $(find immortalwrt/bin/packages/ -type f -name "*.ipk") ipk/ && sync
+          sudo tar -czf ipk.tar.gz ipk && sudo mv -f ipk.tar.gz out/ && sync
+
+      - name: Upload ImmortalWrt firmware to release
+        uses: ncipollo/release-action@main
+        if: env.PACKAGED_STATUS == 'success' && !cancelled()
+        with:
+          tag: ImmortalWrt-21.02-${{ env.PACKAGED_OUTPUTDATE }}
+          artifacts: ${{ env.PACKAGED_OUTPUTPATH }}/*
+          allowUpdates: true
+          token: ${{ secrets.GH_TOKEN }}
+          body: |
+            This is ImmortalWrt firmware for hg680p & b860h
+            * Firmware information
+            Default IP: 192.168.1.1
+            Default username: root
+            Default password: passwd
+            Default WIFI name: LYNX
+            Default WIFI password: none
+            Install to EMMC: Login to ImmortalWrt → System → Amlogic Service → Install OpenWrt
