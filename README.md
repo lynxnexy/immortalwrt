@@ -22,7 +22,7 @@ Login to `ImmortalWrt` → `System` → `Amlogic Service` → `Install OpenWrt`
 
 ## Acknowledgments
 
-- [ImmortalWrt](https://github.com/immortalwrt/immortalwrt)
+- [immortalwrt](https://github.com/immortalwrt/immortalwrt)
 - [unifreq](https://github.com/unifreq)
 - [ophub](https://github.com/ophub)
 - [lynxnexy](https://t.me/lynxnexy)
