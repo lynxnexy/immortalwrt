@@ -347,7 +347,7 @@ extract_armbian() {
 
     # 01. For /boot five files
     tar -xzf ${build_boot} -C ${boot} && sync
-    [[ "$(ls ${boot}/*-${kernel} -l 2>/dev/null | grep "^-" | wc -l)" -ge "4" ]] || error_msg "The /boot files is missing."
+    [[ "$(ls ${boot}/*-${kernel}* -l 2>/dev/null | grep "^-" | wc -l)" -ge "4" ]] || error_msg "The /boot files is missing."
     (cd ${boot} && cp -f uInitrd-* uInitrd && cp -f vmlinuz-* zImage && sync)
     get_textoffset "${boot}/zImage"
 
@@ -357,7 +357,7 @@ extract_armbian() {
     # 03. For /lib/modules/*
     tar -xzf ${build_modules} -C ${root}/lib/modules && sync
     (cd ${root}/lib/modules/${kernel}*/ && rm -f build source *.ko 2>/dev/null && find ./ -type f -name '*.ko' -exec ln -s {} ./ \; && sync)
-    [[ "$(ls ${root}/lib/modules/${kernel}-* -l 2>/dev/null | grep "^d" | wc -l)" -eq "1" ]] || error_msg "Missing kernel."
+    [[ "$(ls ${root}/lib/modules/${kernel}* -l 2>/dev/null | grep "^d" | wc -l)" -eq "1" ]] || error_msg "Missing kernel."
     sync
 }
 
