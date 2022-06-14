@@ -60,7 +60,7 @@ jobs:
          # echo "RELEASES_BRANCH=${RELEASES_BRANCH}" >> $GITHUB_ENV
          # echo "COMPILE_STARTINGTIME=$(date +"%m.%d.%H%M")" >> $GITHUB_ENV
 
-      - name: Download ImmortalWrt Armvirt firmware
+      - name: Download ImmortalWrt armvirt firmware
         id: down
         if: (!cancelled())
         run: |
@@ -79,7 +79,7 @@ jobs:
           openwrt_kernel: ${{ github.event.inputs.openwrt_kernel }}
           openwrt_size: ${{ github.event.inputs.openwrt_size }}
 
-      - name: Upload ImmortalWrt Firmware to Release
+      - name: Upload ImmortalWrt firmware to release
         uses: ncipollo/release-action@main
         if: env.PACKAGED_STATUS == 'success' && !cancelled()
         with:
