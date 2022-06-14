@@ -65,9 +65,6 @@ runs:
         [ -n "${{ inputs.openwrt_size }}" ] && make_command="${make_command} -s ${{ inputs.openwrt_size }}"
         sudo chmod +x make
         sudo ./make ${make_command}
-        [ -d ipk ] || mkdir -p ipk
-        cp -rf $(find immortalwrt/bin/packages/ -type f -name "*.ipk") ipk/ && sync
-        sudo tar -czf ipk.tar.gz ipk && sudo mv -f ipk.tar.gz out/ && sync
 
         cd ${GITHUB_ACTION_PATH}
         echo -e "Output environment variables."
