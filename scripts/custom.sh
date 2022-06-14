@@ -58,6 +58,7 @@ svn co https://github.com/koshev-msk/xmm-modem/trunk package/xmm-modem
 
 # Add luci-app-amlogic
 svn co https://github.com/ophub/luci-app-amlogic/trunk package/luci-app-amlogic
+sed -i -e "s|*\${releases_tag_keywords}.*_\${SOC}_|*\${releases_tag_keywords}.*-\${SOC}-|g" -e "s|openwrt_\${SOC}_|immortalwrt-21.02-\${SOC}-|g" package/luci-app-amlogic/luci-app-amlogic/root/usr/share/amlogic/amlogic_check_firmware.sh
 
 # Add p7zip
 svn co https://github.com/hubutui/p7zip-lede/trunk package/p7zip
