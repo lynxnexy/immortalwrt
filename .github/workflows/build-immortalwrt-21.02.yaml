@@ -117,9 +117,9 @@ jobs:
           openwrt_soc: ${{ github.event.inputs.openwrt_soc }}
           openwrt_kernel: ${{ github.event.inputs.openwrt_kernel }}
           openwrt_size: ${{ github.event.inputs.openwrt_size }}
-        [ -d ipk ] || mkdir -p ipk
-        cp -rf $(find immortalwrt/bin/packages/ -type f -name "*.ipk") ipk/ && sync
-        sudo tar -czf ipk.tar.gz ipk && sudo mv -f ipk.tar.gz out/ && sync
+          [ -d ipk ] || mkdir -p ipk
+          cp -rf $(find immortalwrt/bin/packages/ -type f -name "*.ipk") ipk/ && sync
+          sudo tar -czf ipk.tar.gz ipk && sudo mv -f ipk.tar.gz out/ && sync
 
       - name: Upload ImmortalWrt firmware to release
         uses: ncipollo/release-action@main
