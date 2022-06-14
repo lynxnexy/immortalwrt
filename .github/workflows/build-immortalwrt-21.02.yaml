@@ -19,7 +19,7 @@ on:
       openwrt_kernel:
         description: "Choose kernel version."
         required: false
-        default: "5.4.197_5.15.46"
+        default: "5.4.197_5.15.46_5.17.14"
       openwrt_size:
         description: "Set the rootfs size(Unit: MiB)."
         required: false
