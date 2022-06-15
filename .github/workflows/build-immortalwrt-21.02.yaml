@@ -6,7 +6,7 @@
 # Source code repository: https://github.com/immortalwrt/immortalwrt / Branch: openwrt-21.02
 #========================================================================================================================
 
-name: Build ImmortalWrt-21.02
+name: Build ImmortalWrt 21.02
 
 on:
   repository_dispatch:
@@ -23,7 +23,7 @@ on:
       openwrt_size:
         description: "Set the rootfs size(Unit: MiB)."
         required: false
-        default: "1024"
+        default: "1536"
   #schedule:
     #- cron: '0 17 * * 0'
 
