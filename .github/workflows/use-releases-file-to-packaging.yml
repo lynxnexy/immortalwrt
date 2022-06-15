@@ -26,7 +26,7 @@ on:
       openwrt_size:
         description: "Set the rootfs size(Unit: MiB)."
         required: false
-        default: "1024"
+        default: "1536"
 
 env:
   TZ: Asia/Jakarta
