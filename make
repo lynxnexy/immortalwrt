@@ -57,7 +57,7 @@ op_release="etc/flippy-openwrt-release"
 # Dependency files download repository
 depends_repo="https://github.com/ophub/amlogic-s9xxx-armbian/tree/main/build-armbian"
 # Install/Update script files download repository
-script_repo="https://github.com/ophub/luci-app-amlogic/tree/main/luci-app-amlogic/root/usr/sbin"
+script_repo="https://github.com/lynxnexy/luci-app-amlogic/tree/main/luci-app-amlogic/root/usr/sbin"
 # Kernel files download repository
 kernel_repo="https://github.com/ophub/kernel/tree/main/pub"
 version_branch="stable"
