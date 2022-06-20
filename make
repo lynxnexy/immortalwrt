@@ -468,12 +468,10 @@ EOF
     fi
 
     # Fix luci-app-3ginfo
-    chmod -R +x usr/share/3ginfo/*.sh >/dev/null 2>&1
-    chmod -R +x usr/share/3ginfo-lite/*.sh >/dev/null 2>&1
+    chmod +x usr/share/3ginfo-lite/3ginfo.sh >/dev/null 2>&1
     chmod +x www/cgi-bin/qmisignal.sh >/dev/null 2>&1
-
-    # Fix luci-app-3ginfo-lite
-    # chmod -R +x usr/share/3ginfo-lite/*.sh >/dev/null 2>&1
+    chmod +x usr/share/3ginfo/cgi-bin/*.sh >/dev/null 2>&1
+    chmod +x usr/share/3ginfo/scripts/*.sh >/dev/null 2>&1
 
     # Fix luci-app-atinout
     chmod +x sbin/set_at_port.sh >/dev/null 2>&1
@@ -489,6 +487,7 @@ EOF
     chmod +x sbin/set_sms_ports.sh >/dev/null 2>&1
     chmod +x sbin/smsled-init.sh >/dev/null 2>&1
     chmod +x sbin/smsled.sh >/dev/null 2>&1
+
 
     # Add firmware information
     echo "PLATFORM='amlogic'" >>${op_release} 2>/dev/null
