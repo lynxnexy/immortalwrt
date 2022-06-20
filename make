@@ -467,12 +467,13 @@ EOF
         cp -f ${balethirq_file}/balance_irq etc/balance_irq >/dev/null 2>&1
     fi
 
+    # Fix luci-app-3ginfo
+    chmod -R +x usr/share/3ginfo/*.sh >/dev/null 2>&1
+    chmod -R +x usr/share/3ginfo-lite/*.sh >/dev/null 2>&1
+    chmod +x www/cgi-bin/qmisignal.sh >/dev/null 2>&1
+
     # Fix luci-app-3ginfo-lite
-    chmod +x usr/share/3ginfo-lite/3ginfo.sh >/dev/null 2>&1
-    chmod +x usr/share/3ginfo-lite/set_3ginfo_port.sh >/dev/null 2>&1
-    chmod +x usr/share/3ginfo-lite/3ginfo-hilink/alcatel_hilink.sh >/dev/null 2>&1
-    chmod +x usr/share/3ginfo-lite/3ginfo-hilink/huawei_hilink.sh >/dev/null 2>&1
-    chmod +x usr/share/3ginfo-lite/3ginfo-hilink/zte.sh >/dev/null 2>&1
+    # chmod -R +x usr/share/3ginfo-lite/*.sh >/dev/null 2>&1
 
     # Fix luci-app-atinout
     chmod +x sbin/set_at_port.sh >/dev/null 2>&1
