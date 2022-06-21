@@ -35,8 +35,11 @@ svn export https://github.com/Jbt88/immortalwrt/trunk/amlogic/common/rootfs/etc/
 # Set shell zsh
 sed -i "s/\/bin\/ash/\/usr\/bin\/zsh/g" package/base-files/files/etc/passwd
 
-# Add luci-app-3ginfo-lite
-svn co https://github.com/lynxnexy/luci-app-3ginfo-lite/trunk package/luci-app-3ginfo-lite
+# Set php7 max_size
+sed -i -e "s/upload_max_filesize = 2M/upload_max_filesize = 1024M/g" -e "s/post_max_size = 8M/post_max_size = 1024M/g" feeds/packages/lang/php7/files/php.ini
+
+# Add luci-app-3ginfo
+svn co https://github.com/4IceG/luci-app-3ginfo/trunk package/luci-app-3ginfo
 
 # Add luci-app-modemband
 svn co https://github.com/4IceG/luci-app-modemband/trunk package/luci-app-modemband
@@ -54,10 +57,13 @@ svn co https://github.com/4IceG/luci-app-sms-tool/trunk package/luci-app-sms-too
 svn co https://github.com/koshev-msk/xmm-modem/trunk package/xmm-modem
 
 # Add luci-app-amlogic
-svn co https://github.com/ophub/luci-app-amlogic/trunk package/luci-app-amlogic
+svn co https://github.com/lynxnexy/luci-app-amlogic/trunk package/luci-app-amlogic
 
 # Add p7zip
 svn co https://github.com/hubutui/p7zip-lede/trunk package/p7zip
+
+# Add luci-app-tinyfilemanager
+svn co https://github.com/lynxnexy/luci-app-tinyfilemanager/trunk package/luci-app-tinyfilemanager
 
 # Set preset-clash-core
 mkdir -p files/etc/openclash/core
