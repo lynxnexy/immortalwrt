@@ -41,10 +41,11 @@ sed -i -e "s/upload_max_filesize = 2M/upload_max_filesize = 1024M/g" -e "s/post_
 # Add luci-app-3ginfo
 svn co https://github.com/4IceG/luci-app-3ginfo/trunk package/luci-app-3ginfo
 sed -i "s|, \"<p>\&nbsp;<\/p>\"||g" package/luci-app-3ginfo/luci-app-3ginfo/luasrc/model/cbi/modem/3gconfig.lua
-sed -i -e "s|option 'device' ''|option 'device' '192.168.8.1'|g" -e "s/pl/en/g" package/luci-app-3ginfo/3ginfo/files-text/etc/config/3ginfo
+sed -i "s|option 'device' ''|option 'device' '192.168.8.1'|g" package/luci-app-3ginfo/3ginfo/files-text/etc/config/3ginfo
 
 # Add luci-app-modemband
 svn co https://github.com/4IceG/luci-app-modemband/trunk package/luci-app-modemband
+sed -i -e "s/10/20/g" -e "s/20/30/g" package/luci-app-modemband/luci-app-modemband/root/usr/share/luci/menu.d/luci-app-modemband.json
 
 # Add luci-app-atinout-mod
 svn co https://github.com/4IceG/luci-app-atinout-mod/trunk package/luci-app-atinout-mod
