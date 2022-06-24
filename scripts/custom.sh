@@ -25,8 +25,8 @@ sed -i "s/ImmortalWrt/LYNX/g" package/base-files/files/bin/config_generate
 sed -i "s/root::0:0:99999:7:::/root:"'$'"1"'$'"pSFNodTy"'$'"ej92Jju6QPD9AIAuelgnr.:18993:0:99999:7:::/g" package/base-files/files/etc/shadow
 
 # Set Interface
-sed -i "9 i\uci set network.hilink=interface\nuci set network.hilink.ifname=eth1\nuci set network.hilink.proto=dhcp\nuci commit network\nuci add_list firewall.@zone[1].network='hilink'\nuci commit firewall\n" package/emortal/default-settings/files/99-default-settings
-sed -i "16 i\uci set network.tethering=interface\nuci set network.tethering.ifname=usb0\nuci set network.tethering.proto=dhcp\nuci commit network\nuci add_list firewall.@zone[1].network='tethering'\nuci commit firewall\n" package/emortal/default-settings/files/99-default-settings
+sed -i "9 i\uci set network.wan1=interface\nuci set network.wan1.proto='dhcp'\nuci set network.wan1.device='eth1'\nuci set network.wan1.force_link='1'\nuci set network.wan2=interface\nuci set network.wan2.proto='dhcp'\nuci set network.wan2.device='wwan0'\nuci set network.wan2.force_link='1'\nuci set network.wan3=interface\nuci set network.wan3.proto='dhcp'\nuci set network.wan3.device='usb0'\nuci set network.wan3.force_link='1'\nuci commit network\n" package/emortal/default-settings/files/99-default-settings
+sed -i "23 i\uci add_list firewall.@zone[1].network='wan1'\nuci add_list firewall.@zone[1].network='wan2'\nuci add_list firewall.@zone[1].network='wan3'\nuci commit firewall\n" package/emortal/default-settings/files/99-default-settings
 
 # Add luci-theme-tano (Default)
 svn co https://github.com/lynxnexy/luci-theme-tano/trunk package/luci-theme-tano
@@ -45,7 +45,7 @@ sed -i -e "s/upload_max_filesize = 2M/upload_max_filesize = 1024M/g" -e "s/post_
 # Add luci-app-3ginfo
 svn co https://github.com/4IceG/luci-app-3ginfo/trunk package/luci-app-3ginfo
 sed -i "s|, \"<p>\&nbsp;<\/p>\"||g" package/luci-app-3ginfo/luci-app-3ginfo/luasrc/model/cbi/modem/3gconfig.lua
-sed -i -e "s|option 'device' ''|option 'device' '192.168.8.1'|g" -e "s|option 'network' 'wan'|option 'network' 'hilink'|g" package/luci-app-3ginfo/3ginfo/files-text/etc/config/3ginfo
+sed -i -e "s|option 'device' ''|option 'device' '192.168.8.1'|g" -e "s|option 'network' 'wan'|option 'network' 'wan1'|g" package/luci-app-3ginfo/3ginfo/files-text/etc/config/3ginfo
 
 # Add luci-app-modemband
 svn co https://github.com/4IceG/luci-app-modemband/trunk package/luci-app-modemband
