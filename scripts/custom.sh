@@ -24,6 +24,10 @@ sed -i "s/ImmortalWrt/LYNX/g" package/base-files/files/bin/config_generate
 # Set passwd
 sed -i "s/root::0:0:99999:7:::/root:"'$'"1"'$'"pSFNodTy"'$'"ej92Jju6QPD9AIAuelgnr.:18993:0:99999:7:::/g" package/base-files/files/etc/shadow
 
+# Set Interface
+sed -i "9 i\uci set network.hilink=interface\nuci set network.hilink.ifname=eth1\nuci set network.hilink.proto=dhcp\nuci commit network\nuci add_list firewall.@zone[1].network='hilink'\nuci commit firewall\n" package/emortal/default-settings/files/99-default-settings
+sed -i "16 i\uci set network.tethering=interface\nuci set network.tethering.ifname=usb0\nuci set network.tethering.proto=dhcp\nuci commit network\nuci add_list firewall.@zone[1].network='tethering'\nuci commit firewall\n" package/emortal/default-settings/files/99-default-settings
+
 # Add luci-theme-tano (Default)
 svn co https://github.com/lynxnexy/luci-theme-tano/trunk package/luci-theme-tano
 sed -i "s/+luci-theme-bootstrap //" feeds/luci/collections/luci/Makefile
@@ -41,7 +45,7 @@ sed -i -e "s/upload_max_filesize = 2M/upload_max_filesize = 1024M/g" -e "s/post_
 # Add luci-app-3ginfo
 svn co https://github.com/4IceG/luci-app-3ginfo/trunk package/luci-app-3ginfo
 sed -i "s|, \"<p>\&nbsp;<\/p>\"||g" package/luci-app-3ginfo/luci-app-3ginfo/luasrc/model/cbi/modem/3gconfig.lua
-sed -i "s|option 'device' ''|option 'device' '192.168.8.1'|g" package/luci-app-3ginfo/3ginfo/files-text/etc/config/3ginfo
+sed -i -e "s|option 'device' ''|option 'device' '192.168.8.1'|g" -e "s|option 'network' 'wan'|option 'network' 'hilink'|g" package/luci-app-3ginfo/3ginfo/files-text/etc/config/3ginfo
 
 # Add luci-app-modemband
 svn co https://github.com/4IceG/luci-app-modemband/trunk package/luci-app-modemband
