@@ -163,9 +163,9 @@ sys_tempx=$(echo $sys_temp | sed 's/ / /g')
 # display info
 
 machine_model=$(cat /proc/device-tree/model | tr -d "\000")
-# echo -e "  Device Model	: \033[93m${machine_model}\033[0m"
-printf "  Architecture 	: \x1B[93m%s\x1B[0m" "$sys_tempx"
-echo ""
+echo -e "  Device Model	: \033[93m${machine_model}\033[0m"
+#printf "  Architecture 	: \x1B[93m%s\x1B[0m" "$sys_tempx"
+#echo ""
 display "  Load Average	" "${load%% *}" "${critical_load}" "0" "" "${load#* }"
 echo ""
 printf "  Uptime	: \x1B[92m%s\x1B[0m\t\t" "$time"
