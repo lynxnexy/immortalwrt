@@ -110,11 +110,3 @@ git clone https://github.com/zsh-users/zsh-completions ./.oh-my-zsh/custom/plugi
 cp $GITHUB_WORKSPACE/amlogic/common/patches/zsh/.zshrc .
 cp $GITHUB_WORKSPACE/amlogic/common/patches/zsh/example.zsh ./.oh-my-zsh/custom/example.zsh
 popd
-
-# Fix language
-sed -i -e "s/Visão Geral//" -e "s/Mantenha as configurações e a configuração atual//" -e "s/Configuração//" -e "s/Endereço//" -e "s/Cancelar//" -e "s/Nome do Arquivo//" -e "s/Sistema de Arquivo//" -e "s/Objetivo//" feeds/luci/modules/luci-base/po/en/base.po
-sed -i -e "s/Cancelar/Cancel/g" -e "s/Configuração/Configuration/g" -e "s/Visão Geral/Overview/g" feeds/luci/applications/luci-app-dockerman/po/en/dockerman.po
-sed -i -e "s/Cancelar/Cancel/g" -e "s/Configuração/Configuration/g" feeds/luci/applications/luci-app-vnstat2/po/en/vnstat2.po
-sed -i -e "s/Cancelar/Cancel/g" -e "s/Versão/Version/g" feeds/feeds/luci/applications/luci-app-opkg/po/en/opkg.po
-sed -i "s/Visão Geral/Overview/g" feeds/luci/applications/luci-app-openvpn/po/en/openvpn.po
-sed -i "s/Visão Geral/Overview/g" feeds/luci/applications/luci-app-statistics/po/en/statistics.po
